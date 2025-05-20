@@ -7,12 +7,12 @@ This repository contains a Python script for detecting anomalies in option chain
 ```bash
 .
 ├── ad1.parquet              # Input options data in Parquet format
-├── anomaly_plots/           # Generated plots directory
+├── sample_plots/            # Generated plots directory
 │   └── <INSTRUMENT>.png     # Plot per instrument showing anomalies
 ├── anomaly_results.csv      # Detailed list of detected anomalies
 ├── anomaly_summary.csv      # Count of anomalies per instrument and type
 ├── anomaly_type_summary.csv # Count of anomalies per anomaly type
-├── detect_anomalies.py      # Main Python script
+├── notebook.py              # Main Python script
 └── README.md                # This documentation file
 ```
 
@@ -24,6 +24,39 @@ This repository contains a Python script for detecting anomalies in option chain
   ```bash
   pip install pandas numpy scipy matplotlib
   ```
+
+## Data Description
+
+### Instrument Naming Convention
+
+The instrument name follows this pattern: `X_EXPIRY_STRIKE_TYPE`
+
+For example, in `X_25123_21800_CE`:
+- `X` represents the underlying asset
+- `25123` represents the expiry date (23-Jan-2025)
+- `21800` represents the strike price in Rupees
+- `CE` indicates a Call option (PE would indicate a Put option)
+
+### Available Data Fields
+
+For each option, the following 14 data fields are available:
+
+| Term           | Meaning                                          |
+| -------------- | ------------------------------------------------ |
+| best_bid       | Highest price a buyer is willing to pay          |
+| best_offer     | Lowest price a seller is willing to accept       |
+| ltp            | Last traded price                                |
+| traded_volume  | Number of contracts traded                       |
+| bid_iv         | IV calculated from best_bid                      |
+| ask_iv         | IV calculated from best_offer                    |
+| iv             | IV from last traded price                        |
+| iv_ema60       | EMA of IV over 60 time units                     |
+| iv7            | Short-term IV metric (e.g., 7-period)            |
+| iv7_ema60      | EMA of iv7 over 60 time units                    |
+| delta          | Sensitivity to price changes of underlying asset |
+| gamma          | Sensitivity of delta to price changes            |
+| theta          | Time decay of option price                       |
+| vega           | Sensitivity to changes in implied volatility     |
 
 ## Output Files
 
@@ -49,4 +82,3 @@ The script detects five types of anomalies:
 4. **Spread Widening**: Unusual expansion of the bid-ask spread, often indicating decreased liquidity or increased uncertainty.
 
 5. **Gamma Spike**: Abnormal increases in gamma, which measures the rate of change in delta with respect to the underlying price, potentially indicating heightened sensitivity to price movements.
-
