@@ -2,6 +2,9 @@
 
 This repository contains a Python script for detecting anomalies in option chain time-series data. It computes various anomaly metrics (IV spikes, mispricings, price jumps, spread widenings, and gamma spikes), logs results to CSV files, and generates diagnostic plots.
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1kubPfqfbglB1U6gxDgcDqST7R2cfRMk-?usp=sharing)
+
+
 ## Repository Structure
 
 ```bash
